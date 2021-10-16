@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>My Profile</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]=profileForm (ngSubmit)="onSubmit()">
+    <label for="first-name">First Name:</label>
+    <input id="first-name" type="text" formControlName="firstName" required />
+
+    <label for="last-name">Last Name:</label>
+    <input id="last-name" type="text" formControlName="lastName" required />
+
+    <label for="email-address">Email Adress</label>
+    <input id="email-address" type="email" formControlName="emailAddress" required />
+
+    <label for="birthDate">Birthdate</label>
+    <input id="birthDate" type="date" formControlName="birthDate" required/>
+
+    <div formArrayName="addresses">
+      <h3>Addresses</h3>
+      <ion-button (click)="addAddress()" type="button">+ Add address</ion-button>
+
+      <div *ngFor="let address of addresses.controls; let i = index" formGroupName="{{ i }}">
+        <label for="address-unitNo-{{ i }}">Unit No</label>
+        <input id="address-unitNo-{{ i }}" type="text" formControlName="unitNo" />
+
+        <label for="address-street-{{ i }}">Street</label>
+        <input id="address-street-{{ i }}" type="text" formControlName="street" />
+
+        <label for="address-suburb-{{ i }}">Suburb</label>
+        <input id="address-suburb-{{ i }}" type="text" formControlName="suburb" />
+        
+        <ion-button *ngIf="i > 0" type="button" (click)="deleteAddress(i)">Delete Address</ion-button> 
+      </div>
+    </div>
+    <ion-button type="submit">Submit</ion-button>
+  </form>
+</ion-content>
