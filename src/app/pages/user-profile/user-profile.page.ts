@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormBuilder, FormArray } from '@angular/forms';
 import { UserProfile } from '../../interfaces/user-profile';
 import { Address } from '../../interfaces/address';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../services/user/user.service';
+import { Router } from '@angular/router';
+import { AlertController, ToastController } from '@ionic/angular';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -26,13 +29,16 @@ export class UserProfilePage implements OnInit {
   });
 
   constructor(private formBuilder: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router,
+    private toastController: ToastController,
+    private globalService: GlobalService
     ) { 
-      
+      this.userService.initializeDatabase();
   }
 
   ngOnInit() {
-
+    
   }
 
   onSubmit(){
@@ -42,7 +48,7 @@ export class UserProfilePage implements OnInit {
      userProfile.firstName = this.profileForm.controls['firstName'].value;
      userProfile.lastName = this.profileForm.controls['lastName'].value;
      userProfile.emailAddress = this.profileForm.controls['emailAddress'].value;
-     userProfile.birthDate = this.profileForm.controls['birthDate'].value;
+     userProfile.birthDate =  new Date(this.profileForm.controls['birthDate'].value);
 
      this.addresses.controls.forEach(item => {
       let userAddress= <Address>{};
@@ -57,9 +63,12 @@ export class UserProfilePage implements OnInit {
      userProfile.addresses = userAddresses;
 
      this.userService.addUser(userProfile)
-      .then(() => alert('User Successfully saved'))
-      .catch(e => alert(JSON.stringify(e)));
-     console.log(JSON.stringify(userProfile));
+      .then((id) => { 
+        this.openToast('Profile successfully created', "success");
+        this.globalService.publish({userId: id})
+        this.router.navigate(['weather-main'])
+      })
+      .catch(e => console.error(JSON.stringify(e)));
   }
 
   deleteAddress(index: number){
@@ -80,4 +89,13 @@ export class UserProfilePage implements OnInit {
     )
   }
 
+  async openToast(msg: string, color: string){
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 3000,
+      color: color,
+      position: "top"
+    }); 
+    toast.present();
+  }
 }

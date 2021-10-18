@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Update my Profile</ion-title>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]=profileForm (ngSubmit)="onSubmit()">
+    <ion-list lines="none">
+      <ion-item>
+        <ion-label>First Name:</ion-label>
+        <ion-input formControlName="firstName" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Last Name:</ion-label>
+        <ion-input formControlName="lastName" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Email Address:</ion-label>
+        <ion-input formControlName="emailAddress" type="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Birthdate:</ion-label>
+        <ion-datetime formControlName="birthDate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <div formArrayName="addresses">
+          <ion-label>Addresses</ion-label>
+          <ion-button (click)="addAddress()" type="button">+</ion-button>
+          <div *ngFor="let address of addresses.controls; let i = index" formGroupName="{{ i }}">
+            <ion-item>
+              <ion-label>Unit No:</ion-label>
+              <ion-input formControlName="unitNo" type="text"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Street:</ion-label>
+              <ion-input formControlName="street" type="text"></ion-input>
+            </ion-item>  
+            <ion-item>
+              <ion-label>Suburb:</ion-label>
+              <ion-input formControlName="suburb" type="text"></ion-input>
+            </ion-item>  
+            <ion-item>
+              <ion-button *ngIf="i > 0" type="button" color="danger" (click)="deleteAddress(i)">-</ion-button> 
+            </ion-item>
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>    
+    <ion-button type="submit" expand="block">Update Profile</ion-button>
+    <ion-button expand="block" color="danger" (click)='confirmDelete()'>Delete Profile</ion-button>
+  </form>
+</ion-content>

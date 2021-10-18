@@ -1,43 +1,50 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>My Profile</ion-title>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <form [formGroup]=profileForm (ngSubmit)="onSubmit()">
-    <label for="first-name">First Name:</label>
-    <input id="first-name" type="text" formControlName="firstName" required />
-
-    <label for="last-name">Last Name:</label>
-    <input id="last-name" type="text" formControlName="lastName" required />
-
-    <label for="email-address">Email Adress</label>
-    <input id="email-address" type="email" formControlName="emailAddress" required />
-
-    <label for="birthDate">Birthdate</label>
-    <input id="birthDate" type="date" formControlName="birthDate" required/>
-
-    <div formArrayName="addresses">
-      <h3>Addresses</h3>
-      <ion-button (click)="addAddress()" type="button">+ Add address</ion-button>
-
-      <div *ngFor="let address of addresses.controls; let i = index" formGroupName="{{ i }}">
-        <label for="address-unitNo-{{ i }}">Unit No</label>
-        <input id="address-unitNo-{{ i }}" type="text" formControlName="unitNo" />
-
-        <label for="address-street-{{ i }}">Street</label>
-        <input id="address-street-{{ i }}" type="text" formControlName="street" />
-
-        <label for="address-suburb-{{ i }}">Suburb</label>
-        <input id="address-suburb-{{ i }}" type="text" formControlName="suburb" />
-        
-        <ion-button *ngIf="i > 0" type="button" (click)="deleteAddress(i)">Delete Address</ion-button> 
-      </div>
-    </div>
-    <ion-button type="submit">Submit</ion-button>
+    <ion-list lines="none">
+      <ion-item>
+        <ion-label>First Name:</ion-label>
+        <ion-input type="text" formControlName="firstName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Last Name:</ion-label>
+        <ion-input type="text" formControlName="lastName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Email Address:</ion-label>
+        <ion-input type="email" formControlName="emailAddress"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Birthdate:</ion-label>
+        <ion-datetime type="text" formControlName="birthDate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <div formArrayName="addresses">
+          <ion-label>addresses</ion-label>
+          <ion-button (click)="addAddress()" type="button">+</ion-button>
+          <div *ngFor="let address of addresses.controls; let i = index" formGroupName="{{ i }}">
+            <ion-item>
+              <ion-label>Unit No:</ion-label>
+              <ion-input type="text" formControlName="unitNo"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Street</ion-label>
+              <ion-input type="text" formControlName="street"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Suburb:</ion-label>
+              <ion-input type="text" formControlName="suburb"></ion-input>
+            </ion-item>
+            <ion-button *ngIf="i > 0" color="danger" type="button" (click)="deleteAddress(i)">-</ion-button> 
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+    <ion-button type="submit" expand="block">Submit</ion-button>
   </form>
 </ion-content>
