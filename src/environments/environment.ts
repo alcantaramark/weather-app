@@ -6,6 +6,8 @@ export const environment = {
   production: false
 };
 
+export const ANDROID_GOOGLE_MAPS_APIKEY:string = 'AIzaSyBHboNdxIDh18mtFhhX9cxv1zyCDDoonss';
+export const IOS_GOOGLE_MAPS_APIKEY:string = 'AIzaSyAPK9_EDgl-jzwB1lXq9SfYFOKpNpjZykE';
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

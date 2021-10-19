@@ -3,7 +3,6 @@ import { Router, ɵangular_packages_router_router_b } from '@angular/router';
 import { GlobalService } from './services/global/global.service';
 import { UserService } from './services/user/user.service';
 
-
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -25,6 +24,8 @@ export class AppComponent implements OnInit{
   }
 
   initApp(){
+    //Initializing Database and Redirection logic
+    this
     this.globalService.getObservable().subscribe(data => this.userId = data.userId);
     this.userService.initializeDatabase().then(() => {
       this.userService.getUsers().then(res => {

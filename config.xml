@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ionyx.weatherapp" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Weather App</name>
     <description>The app will display current weather based on your location</description>
     <author email="alcantaramarkjohn@yahoo.com" href="mailto:alcantaramarkjohn@yahoo.com">Mark John Alcantara</author>
@@ -98,4 +98,6 @@
     <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
     <plugin name="cordova-plugin-ionic-webview" spec="^4.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
+    <preference name="GOOGLE_MAPS_ANDROID_API_KEY" value="AIzaSyBHboNdxIDh18mtFhhX9cxv1zyCDDoonss" />
+    <preference name="GOOGLE_MAPS_IOS_API_KEY" value="AIzaSyAPK9_EDgl-jzwB1lXq9SfYFOKpNpjZykE" />
 </widget>

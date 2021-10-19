@@ -92,7 +92,7 @@ export class UserService {
         console.log("User successfully saved in the database");
         this.deleteUserAddress(user.id).then(() => {
           let promises = [];
-          user.addresses.forEach(item => promises.push(this.addUserAddress(user.id, item)));
+          user.addresses.forEach(item => promises.push(this.addUserAddress(user.id, item).catch(e => console.error("error adding address", e))));
           Promise.all(promises).then(() => resolve());
         });
       })

@@ -6,45 +6,70 @@
 
 <ion-content>
   <form [formGroup]=profileForm (ngSubmit)="onSubmit()">
-    <ion-list lines="none">
-      <ion-item>
-        <ion-label>First Name:</ion-label>
-        <ion-input type="text" formControlName="firstName"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>Last Name:</ion-label>
-        <ion-input type="text" formControlName="lastName"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>Email Address:</ion-label>
-        <ion-input type="email" formControlName="emailAddress"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>Birthdate:</ion-label>
-        <ion-datetime type="text" formControlName="birthDate"></ion-datetime>
-      </ion-item>
-      <ion-item>
-        <div formArrayName="addresses">
-          <ion-label>addresses</ion-label>
-          <ion-button (click)="addAddress()" type="button">+</ion-button>
-          <div *ngFor="let address of addresses.controls; let i = index" formGroupName="{{ i }}">
-            <ion-item>
-              <ion-label>Unit No:</ion-label>
-              <ion-input type="text" formControlName="unitNo"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label>Street</ion-label>
-              <ion-input type="text" formControlName="street"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label>Suburb:</ion-label>
-              <ion-input type="text" formControlName="suburb"></ion-input>
-            </ion-item>
-            <ion-button *ngIf="i > 0" color="danger" type="button" (click)="deleteAddress(i)">-</ion-button> 
-          </div>
+    <ion-item lines="full">
+      <ion-label position="floating">First Name</ion-label>
+      <ion-input type="text" formControlName="firstName"></ion-input>
+    </ion-item>
+    <span class="error-message" *ngIf="this.profileForm.controls['firstName'].errors?.required">
+      First name is required.
+    </span>
+    <ion-item lines="full">
+      <ion-label position="floating">Last Name</ion-label>
+      <ion-input type="text" formControlName="lastName"></ion-input>
+    </ion-item>
+    <span class="error-message" *ngIf="this.profileForm.controls['lastName'].errors?.required">
+      Last name is required.
+    </span>
+    <ion-item lines="full">
+      <ion-label position="floating">Email Address:</ion-label>
+      <ion-input type="email" formControlName="emailAddress"></ion-input>
+    </ion-item>
+    <span class="error-message" *ngIf="this.profileForm.controls['emailAddress'].errors?.required">
+      Email is required
+    </span>
+    <ion-item lines="full">
+      <ion-label position="floating">Birthdate:</ion-label>
+      <ion-datetime type="text" formControlName="birthDate"></ion-datetime>
+    </ion-item>
+    <span class="error-message" *ngIf="this.profileForm.controls['birthDate'].errors?.required">
+      Date of birth is required.
+    </span>
+    <ion-item lines="full">
+      <div formArrayName="addresses">
+        <ion-row>
+          <ion-col>
+            <ion-label>addresses</ion-label>
+            <ion-button size="small" (click)="addAddress()" type="button">+</ion-button>
+          </ion-col>  
+        </ion-row>
+        <div *ngFor="let address of addresses.controls; let i = index" formGroupName="{{ i }}">
+          <ion-item lines="full">
+            <ion-label position="floating">Unit No</ion-label>
+            <ion-input type="text" formControlName="unitNo"></ion-input>
+          </ion-item>
+          <span class="error-message" *ngIf="address.get('unitNo').errors?.required">
+            Unit no is required
+          </span>
+          <ion-item lines="full">
+            <ion-label position="floating">Street</ion-label>
+            <ion-input type="text" formControlName="street"></ion-input>
+          </ion-item>
+          <span class="error-message" *ngIf="address.get('street').errors?.required">
+            Street is required
+          </span>
+          <ion-item>
+            <ion-label position="floating">Suburb</ion-label>
+            <ion-input type="text" formControlName="suburb"></ion-input>
+            <span class="error-message" *ngIf="address.get('suburb').errors?.required">
+              Suburb is required
+            </span>
+            <ion-button *ngIf="i > 0" size="small" color="danger" type="button" (click)="deleteAddress(i)">Delete</ion-button> 
+          </ion-item>
         </div>
-      </ion-item>
-    </ion-list>
-    <ion-button type="submit" expand="block">Submit</ion-button>
+      </div>
+    </ion-item>
+    <ion-row>
+      <ion-col><ion-button type="submit" expand="block" color="success">Submit</ion-button></ion-col>
+    </ion-row>
   </form>
 </ion-content>

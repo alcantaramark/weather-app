@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormArray } from '@angular/forms';
+import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { UserProfile } from '../../interfaces/user-profile';
 import { Address } from '../../interfaces/address';
 import { UserService } from '../../services/user/user.service';
@@ -15,15 +15,15 @@ import { GlobalService } from 'src/app/services/global/global.service';
 export class UserProfilePage implements OnInit {
   
   profileForm = this.formBuilder.group({
-    firstName: [''],
-    lastName: [''],
-    emailAddress: [''],
-    birthDate: [''],
+    firstName: ['', [Validators.required]],
+    lastName: ['', [Validators.required]],
+    emailAddress: ['', [Validators.required]],
+    birthDate: ['', [Validators.required]],
     addresses: this.formBuilder.array([this.formBuilder.group(
       {
-        unitNo: [''],
-        street: [''],
-        suburb: ['']
+        unitNo: ['', [Validators.required]],
+        street: ['', [Validators.required]],
+        suburb: ['', [Validators.required]]
       }
     )]) 
   });
@@ -45,30 +45,32 @@ export class UserProfilePage implements OnInit {
      let userProfile = <UserProfile>{};
      let userAddresses: Address[] = new Array();
     
-     userProfile.firstName = this.profileForm.controls['firstName'].value;
-     userProfile.lastName = this.profileForm.controls['lastName'].value;
-     userProfile.emailAddress = this.profileForm.controls['emailAddress'].value;
-     userProfile.birthDate =  new Date(this.profileForm.controls['birthDate'].value);
+     if(this.profileForm.valid){
+      userProfile.firstName = this.profileForm.controls['firstName'].value;
+      userProfile.lastName = this.profileForm.controls['lastName'].value;
+      userProfile.emailAddress = this.profileForm.controls['emailAddress'].value;
+      userProfile.birthDate =  new Date(this.profileForm.controls['birthDate'].value);
 
-     this.addresses.controls.forEach(item => {
-      let userAddress= <Address>{};
-      
-      userAddress.unitNo = item.value.unitNo;
-      userAddress.street = item.value.street;
-      userAddress.suburb = item.value.suburb;
+      this.addresses.controls.forEach(item => {
+        let userAddress= <Address>{};
+        
+        userAddress.unitNo = item.value.unitNo;
+        userAddress.street = item.value.street;
+        userAddress.suburb = item.value.suburb;
 
-      userAddresses.push(userAddress);
-     });
+        userAddresses.push(userAddress);
+      });
 
-     userProfile.addresses = userAddresses;
+      userProfile.addresses = userAddresses;
 
-     this.userService.addUser(userProfile)
-      .then((id) => { 
-        this.openToast('Profile successfully created', "success");
-        this.globalService.publish({userId: id})
-        this.router.navigate(['weather-main'])
-      })
-      .catch(e => console.error(JSON.stringify(e)));
+      this.userService.addUser(userProfile)
+        .then((id) => { 
+          this.openToast('Profile successfully created', "success");
+          this.globalService.publish({userId: id})
+          this.router.navigate(['weather-main'])
+        })
+        .catch(e => console.error(JSON.stringify(e)));
+    }
   }
 
   deleteAddress(index: number){
@@ -82,9 +84,9 @@ export class UserProfilePage implements OnInit {
   addAddress(){
     this.addresses.push(this.formBuilder.group(
       {
-        unitNo: [''],
-        street: [''],
-        suburb: ['']
+        unitNo: ['', [Validators.required]],
+        street: ['', [Validators.required]],
+        suburb: ['', [Validators.required]]
       })
     )
   }

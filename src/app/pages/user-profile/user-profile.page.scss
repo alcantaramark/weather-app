@@ -1,10 +1,15 @@
-form {
-    padding-top: 1rem;
-    margin-left: 1rem;
-  }
+// form {
+//     padding-top: 1rem;
+//     margin-left: 1rem;
+//   }
   
-  label {
-    display: block;
-    margin: .5em 0;
-    font-weight: bold;
-  }
+//   label {
+//     display: block;
+//     margin: .5em 0;
+//     font-weight: bold;
+//   }
+.error-message{
+  font-size: small;
+  color: red;
+  margin-left: 10px;
+}
