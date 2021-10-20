@@ -16,13 +16,19 @@
   <ion-row>
     <ion-col>
       <ion-item lines="full">
-        <ion-label>Current weather today</ion-label>
+        <ion-img [src]="imgUrl"></ion-img>
       </ion-item>
       <ion-item lines="full">
-        <ion-label>Latitude:{{ currentLat }}</ion-label>
+        <ion-label>Weather Condition: {{ currentWeather }}</ion-label>
       </ion-item>
       <ion-item lines="full">
-        <ion-label>Longitude:{{ currentLong }}</ion-label>
+        <ion-label>Temperature: {{ currentTemperature }} <span>&#176;</span>C</ion-label>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-label>Place: {{ currentCity }}</ion-label>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-label>{{ dateToday | date:'short' }}</ion-label>
       </ion-item>
     </ion-col>
   </ion-row>
