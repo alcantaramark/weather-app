@@ -35,7 +35,8 @@ export class WeatherMainPage implements OnInit {
   }
   
   initApp(){
-    this.loadMap().then(res => this.loadWeather(res.lat, res.lon));
+    this.loadMap().then(res => this.loadWeather(res.lat, res.lon))
+    .catch(e => console.error(JSON.stringify(e)));
   }
 
   loadMap(): Promise<any>{
@@ -43,9 +44,6 @@ export class WeatherMainPage implements OnInit {
       this.map = GoogleMaps.create('map', {});
 
       this.map.getMyLocation().then((location: MyLocation) => {
-        location.latLng.lat = 14.573694;
-        location.latLng.lng = 121.049143;
-  
         this.map.animateCamera({
           target: location.latLng,
           zoom: 17,
@@ -61,7 +59,7 @@ export class WeatherMainPage implements OnInit {
         marker.showInfoWindow();
         resolve({lat: location.latLng.lat, lon: location.latLng.lng });
       }).catch(e => reject(e.error_message));
-    });
+    })
   }
 
   GoToCurrentLocation(){

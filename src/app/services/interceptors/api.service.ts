@@ -13,6 +13,7 @@ export class ApiService implements HttpInterceptor{
         APPID: WEATHER_APIKEY
       } 
     });
+    console.warn('interceptor: ', JSON.stringify(req));
    return next.handle(req);
   }
   constructor() { }

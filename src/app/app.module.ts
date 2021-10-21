@@ -11,6 +11,8 @@ import { SQLite } from '@ionic-native/sqlite/ngx';
 import { ApiService } from './services/interceptors/api.service';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HTTP } from '@ionic-native/http/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar} from '@ionic-native/status-bar/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +23,8 @@ import { HTTP } from '@ionic-native/http/ngx';
     AppRoutingModule],
   providers: [
   { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+  , SplashScreen
+  , StatusBar
   , SQLite
   , HTTP
   ,{ 
