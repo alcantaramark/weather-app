@@ -22,38 +22,36 @@ export class UserService {
 
   initializeDatabase():Promise<void>{
     return new Promise((resolve) => {
-      this.platform.ready().then(() => {
-        this.sqlite.create({
-          name: this.dbName,
-          location: 'default'
-        }).then((sqLite: SQLiteObject) => {
-          console.log("Database succcessfully created");
-          this.dbInstance = sqLite;
-          sqLite.executeSql(`CREATE TABLE IF NOT EXISTS ${this.dbUserTable}(
+      this.sqlite.create({
+        name: this.dbName,
+        location: 'default'
+      }).then((sqLite: SQLiteObject) => {
+        console.log("Database succcessfully created");
+        this.dbInstance = sqLite;
+        sqLite.executeSql(`CREATE TABLE IF NOT EXISTS ${this.dbUserTable}(
+          id INTEGER PRIMARY KEY,
+          firstName varchar(255),
+          lastName varchar(255),
+          emailAddress varchar(255),
+          birthDate datetime
+        )`, [])
+        .then((res) => {
+          console.log("Successfully created User Table", JSON.stringify(res))
+          sqLite.executeSql(`CREATE TABLE IF NOT EXISTS ${this.dbAddressTable}(
             id INTEGER PRIMARY KEY,
-            firstName varchar(255),
-            lastName varchar(255),
-            emailAddress varchar(255),
-            birthDate datetime
-          )`, [])
-          .then((res) => {
-            console.log("Successfully created User Table", JSON.stringify(res))
-            sqLite.executeSql(`CREATE TABLE IF NOT EXISTS ${this.dbAddressTable}(
-              id INTEGER PRIMARY KEY,
-              userId INTEGER,
-              unitNo varchar(255),
-              street varchar(255),
-              suburb varchar(255),
-              FOREIGN KEY(userId) REFERENCES ${this.dbUserTable}(id) ON DELETE CASCADE)`, [])
-            .then((res) => console.log("table address successfully created") )
-            .catch((error) => console.error(JSON.stringify(error)));
-          })
+            userId INTEGER,
+            unitNo varchar(255),
+            street varchar(255),
+            suburb varchar(255),
+            FOREIGN KEY(userId) REFERENCES ${this.dbUserTable}(id) ON DELETE CASCADE)`, [])
+          .then((res) => console.log("table address successfully created") )
           .catch((error) => console.error(JSON.stringify(error)));
-          resolve();
         })
-        .catch((error) => console.error(JSON.stringify(error)))
+        .catch((error) => console.error(JSON.stringify(error)));
+        resolve();
       })
-    })
+      .catch((error) => console.error(JSON.stringify(error)))
+    });
     
   }
 
