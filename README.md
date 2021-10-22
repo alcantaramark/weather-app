@@ -50,6 +50,10 @@ ionic cordova prepare ios
 6. Xcode will let your signin your developer account
 7. Attached a device and press run
 
+# Alternatively, you can also run the app in the terminal/cmd
+1. ionic cordova run android --device
+2. ionic cordova run ios --device
+
 
 
 
